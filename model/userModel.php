@@ -10,6 +10,7 @@
            $this->connection = $conn->connect();
         }
 
+        
         // Call all users function. --//-- Funcion de llamado a todos los usuarios.
         public function getAllUsers()
         {
@@ -20,6 +21,8 @@
             return $result->fetch_all(MYSQLI_ASSOC);
         }
 
+
+        // Function of calling a user.--//--Funcion de llamado a un usuario.
         public function getById($idUser)
         {
             $sql = "SELECT * FROM userTable WHERE idUser = $idUser";
