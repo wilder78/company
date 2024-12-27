@@ -1,0 +1,16 @@
+Options -Indexes
+# Compress certain file types by extension:
+<Files *.html>
+	SetOutputFilter DEFLATE
+</Files>
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule  ^(.+)$ index.php?url=$1 [QSA,L]
+
+  # Descomentar para forzar HTTPS
+  #RewriteCond %{HTTPS} off 
+  #RewriteRule ^(.*)$ https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>

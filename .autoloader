@@ -1,0 +1,11 @@
+<?php
+
+    require_once "db/dataBase.php";
+
+    require_once "config/.db.inc";
+    require_once "config/.settings.inc";
+
+    require_once "control/userControl.class.php";
+    require_once "model/userModel.class.php";
+
+?>

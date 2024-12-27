@@ -1,0 +1,51 @@
+<?php
+
+    class frontController
+    {
+        private $action;
+        private $params;
+
+        // Function that generates a request process. --//-- Función que genera un proceso de solicitud.
+        public function processRequest()
+        {
+            // echo "Estoy en el front controller";
+            // print_r("<pre>");
+            // print_r($_REQUEST);
+            if (isset($_REQUEST["url"])) {
+                // echo ("Hi Houston OK");
+                // print_r($_REQUEST["url"]);
+                $url = explode("/",trim($_REQUEST["url"]));
+                // print_r("<pre>");
+                // print_r($url);
+                $this->action = array_shift($url);
+
+                // print_r("La acción ".$this->action);
+                // print_r("<pre>");
+                // print_r($url);
+                $this->params = $url;
+                $this->dispatcher($this->action, $this->params);
+            } else {
+                print_r("Invalid Action :(...");
+            }
+        }
+
+
+        public function dispatcher($action, $params)
+        {
+            $fileName = ACTIONS . $action . ".class.php";
+            
+            if (is_file($fileName)) {
+                require_once $fileName;
+
+                if (!class_exists($action)) {
+                    echo "Clase no existe";
+                } else {
+                    $cmd = new $action();
+                    $cmd->execute($params);
+                }
+            } else 
+                echo "Archivo no existe";      
+        }
+    }
+
+?>
