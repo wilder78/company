@@ -5,6 +5,6 @@
 
     $process = new frontController();
 
-    $process->processRequest()
-
+    $process->processRequest();
+    
 ?>
