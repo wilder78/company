@@ -7,8 +7,16 @@
             $u = new userControl();
 
             $result = $u->listOfUsers();
-            
-            print_r(json_encode($result));
+            $response = [
+                "result" => "success",
+                "data" => $result,
+                "message" => "listado generado."
+            ];
+
+            if (!CALL_API == true) // Debe mostrar una pantalla HTML
+                $response["view"] = "users/index";
+
+            return $response;
         }
     }
 ?>

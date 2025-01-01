@@ -8,22 +8,38 @@
         // Function that generates a request process. --//-- Función que genera un proceso de solicitud.
         public function processRequest()
         {
-            // echo "Estoy en el front controller";
-            // print_r("<pre>");
-            // print_r($_REQUEST);
-            if (isset($_REQUEST["url"])) {
-                // echo ("Hi Houston OK");
-                // print_r($_REQUEST["url"]);
-                $url = explode("/",trim($_REQUEST["url"]));
-                // print_r("<pre>");
-                // print_r($url);
-                $this->action = array_shift($url);
 
-                // print_r("La acción ".$this->action);
-                // print_r("<pre>");
-                // print_r($url);
+            if (isset($_REQUEST["url"])) {
+
+                $url = explode("/",trim($_REQUEST["url"]));
+                $view = array_shift($url);
+                if ($view == "api")
+                {
+                    define("CALL_API", true); // Me llama por API.
+                }
+                else
+                {
+                    define("CALL_API", false); //Me llamo por WEB.
+                }
+                $complement = $url;
+
+                if (count($complement) == 0)
+                    showError("Petición Invalida ", true);
+
+                $this->action = array_shift($url);
                 $this->params = $url;
-                $this->dispatcher($this->action, $this->params);
+                $result = $this->dispatcher($this->action, $this->params);
+                
+                if ($result["result"] == "fail")
+                {
+                    $result["view"] = "defaultError";
+                }
+                if (CALL_API)
+                    print_r(json_encode($result));
+                else    // Es un llamado para una interface WEB.
+                        // Esta es la gran magia.
+                        // llamo la clase que me renderiza la vista.
+                    View::render($result);
             } else {
                 print_r("Invalid Action :(...");
             }
@@ -41,10 +57,11 @@
                     echo "Clase no existe";
                 } else {
                     $cmd = new $action();
-                    $cmd->execute($params);
+                    return $cmd->execute($params);
                 }
             } else 
-                echo "Archivo no existe";      
+                // die("Archivo no existe");
+                showError("Archivo no existe", true);   
         }
     }
 

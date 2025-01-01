@@ -11,9 +11,10 @@ class cmdUserAuthenticate
 
         if (is_array($result)) {
             $response = [
-                "result" => "ok",
+                "result" => "success",
                 "data" => $result,
-                "message" => "Usuario Valido!"
+                "message" => "Usuario Valido!",
+                "view" => "home"
 
 
             ];
@@ -23,9 +24,10 @@ class cmdUserAuthenticate
 
         if ($result == 0) {
             $response = [
-                "result" => "bad",
+                "result" => "fail",
                 "data" => "",
-                "message" => "Datos incompletos"
+                "message" => "Datos incompletos",
+                "view" => "login"
             ];
 
             // require "views/login.php";
@@ -33,14 +35,14 @@ class cmdUserAuthenticate
 
         if ($result == 1) {
             $response = [
-                "result" => "bad",
+                "result" => "fail",
                 "data" => "",
-                "message" => "Usuario Invalido"
+                "message" => "Usuario Invalido",
+                "view" => "login"
             ];
 
             // require "views/login.php";
         }
-
-        print_r(json_encode($response));
+        return $response;
     }
 }

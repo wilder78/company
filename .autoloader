@@ -8,4 +8,7 @@
     require_once "control/userControl.class.php";
     require_once "model/userModel.class.php";
 
+    require_once "system/Helper.class.php";
+    require_once "system/View.class.php";
+
 ?>
