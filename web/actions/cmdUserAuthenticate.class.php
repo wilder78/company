@@ -2,10 +2,13 @@
 
 class cmdUserAuthenticate
 {
-    public function execute()
+    private $default_request_method = "POST";
+    
+    public function execute($params)
     {
-        extract($_REQUEST);
+        valid_method($this->default_request_method);
         
+        extract($_REQUEST);
         $u = new userControl();
         $result = $u->authenticate($email, $password);
 
@@ -15,8 +18,6 @@ class cmdUserAuthenticate
                 "data" => $result,
                 "message" => "Usuario Valido!",
                 "view" => "home"
-
-
             ];
 
             // require "views/home.php";

@@ -13,6 +13,11 @@
 
                 $url = explode("/",trim($_REQUEST["url"]));
                 $view = array_shift($url);
+
+                // Validate that it is called by "API" or "WEB". --//-- Validar que se llame por "API" o "WEB".
+                if ($view != "api" && $view != "web" )
+                    showError("Petición invalida", true);
+
                 if ($view == "api")
                 {
                     define("CALL_API", true); // Me llama por API.

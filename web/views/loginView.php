@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>Estoy en el login...!</h1>
-    <form name="autenticar" action="index.php" method="POST">
+    <form name="autenticar" action="../web/cmdUserAuthenticate" method="POST">
         
         <div>
             <label for="" class="form-label">Email</label>
@@ -22,5 +22,9 @@
         <input type="submit" value="Autenticar">
         <input type="hidden" name="action" value="autenticar">
     </form>
+    <?php 
+    if (isset($d))
+        echo $d->message;
+    ?>
 </body>
 </html>

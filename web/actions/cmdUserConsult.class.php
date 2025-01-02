@@ -2,8 +2,13 @@
 
     class cmdUserConsult
     {
+        private $default_request_method = "GET";
+
         public function execute()
         {
+            // Validate the "POST" or "GET" call method. --//-- Validar el metodo de llamado "POST" o "GET".
+            valid_method($this->default_request_method);
+
             $u = new userControl();
 
             $result = $u->listOfUsers();
